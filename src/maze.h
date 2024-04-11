@@ -9,8 +9,6 @@
 
 class Maze {
 private:
-    int numRows;
-    int numCols;
     int seed;
 
 public:
@@ -29,6 +27,8 @@ public:
     void remove_random_walls();
 
     std::vector<Cell> flat_maze;
+    int numRows;
+    int numCols;
 
 };
 

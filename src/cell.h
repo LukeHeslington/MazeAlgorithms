@@ -47,6 +47,7 @@ public:
 
     //BNB
     int path_length = 0;
+    int distanceFromStart = 0;
 
 
 };

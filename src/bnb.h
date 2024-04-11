@@ -8,7 +8,6 @@ private:
     std::vector<int> path;
     std::vector<Cell*> fastest_path;
     void backtrack(Cell* current, std::vector<Cell*>& tempPath);
-    int distanceFromStart = -1;
 
 public:
     BNB(Maze& maze);

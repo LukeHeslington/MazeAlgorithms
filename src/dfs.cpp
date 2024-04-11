@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <limits>
 
 DFS::DFS(Maze& maze) : maze(maze) {
 }
