@@ -18,17 +18,15 @@ Maze::Maze(int rows, int cols, unsigned int seed) : numRows(rows), numCols(cols)
         }
     }
 
-    //std::cout << "Maze constructor called" << std::endl;
 }
 
 Maze::~Maze() {
-    //std::cout << "Maze destructor called" << std::endl;
 }
 
 void Maze::generate() {
-    std::cout << "Maze generated" << std::endl;
+    std::cout << "Calculating Neighbours" << std::endl;
     calculate_neighbours();
-    std::cout << "Neighbours calculated" << std::endl;
+    std::cout << "Creating Maze" << std::endl;
     turn_map_into_maze();
 }
 
@@ -54,7 +52,6 @@ void Maze::calculate_neighbours(){
 }
 
 void Maze::turn_map_into_maze(){
-    std::cout << "Seed: " << seed << std::endl;
     srand(seed); //Use with rand() % 4 to get a value between 0 and 3
 
     //Use recursive backtracking to generate the maze
@@ -82,6 +79,7 @@ void Maze::turn_map_into_maze(){
             stack.pop_back();
         }
     }    
+    std::cout << "Removing walls" << std::endl;
     remove_random_walls();
 }
 
@@ -105,7 +103,6 @@ void Maze::remove_random_walls(){
 }
 
 void Maze::display(std::vector<int> path) {
-    std::cout << "Maze displayed" << std::endl;
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
     while (window.isOpen()) {
@@ -157,22 +154,22 @@ void Maze::display(std::vector<int> path) {
                 int cell_id = flat_maze[i * numCols + j].getID();
                 
                 if (std::find(neighbours.begin(), neighbours.end(), &flat_maze[cell_id - numCols]) == neighbours.end()) {
-                    //std::cout << "Cell above" << std::endl;
+                    //Cell above
                     borderLines[0].position = sf::Vector2f(cellPosX, cellPosY);
                     borderLines[1].position = sf::Vector2f(cellPosX + cell_size, cellPosY);
                 }
                 if (std::find(neighbours.begin(), neighbours.end(), &flat_maze[cell_id + numCols]) == neighbours.end()) {
-                    //std::cout << "Cell below" << std::endl;
+                    //Cell below
                     borderLines[2].position = sf::Vector2f(cellPosX + cell_size, cellPosY + cell_size);
                     borderLines[3].position = sf::Vector2f(cellPosX, cellPosY + cell_size);
                 }
                 if (std::find(neighbours.begin(), neighbours.end(), &flat_maze[cell_id - 1]) == neighbours.end()) {
-                    //std::cout << "Cell left" << std::endl;
+                    //Cell left
                     borderLines[4].position = sf::Vector2f(cellPosX, cellPosY + cell_size);
                     borderLines[5].position = sf::Vector2f(cellPosX, cellPosY);
                 }
                 if (std::find(neighbours.begin(), neighbours.end(), &flat_maze[cell_id + 1]) == neighbours.end()) {
-                    //std::cout << "Cell right" << std::endl;
+                    //Cell right
                     borderLines[6].position = sf::Vector2f(cellPosX + cell_size, cellPosY);
                     borderLines[7].position = sf::Vector2f(cellPosX + cell_size, cellPosY + cell_size);
                 }

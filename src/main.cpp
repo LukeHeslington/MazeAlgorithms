@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     {
         seed = atoi(argv[4]);
     }
-    std::cout << seed << std::endl;
+    std::cout << "Seed value:" << seed << std::endl;
 
     bool displayGraphics = false;
     for (int i = 1; i < argc; ++i) 
@@ -58,7 +58,6 @@ int main(int argc, char *argv[]) {
             break;
         }
     }
-    std::cout << "Display graphics: " << displayGraphics << std::endl;  
 
     //call the maze class with the arguments rows, cols, seed.
     Maze maze(rows, cols, seed);
@@ -67,10 +66,11 @@ int main(int argc, char *argv[]) {
     //Run the algorithm function based on the argument
     std::vector<int> path;
 
+    std::cout << "Running the algorithm" << std::endl;
     //start timing
     auto start = std::chrono::high_resolution_clock::now();
 
-
+    
     if (std::string(argv[1]) == "bfs" || std::string(argv[1]) == "BFS") {BFS bfs(maze); bfs.run(); path = bfs.get_path();}
     else if (std::string(argv[1]) == "dfs" || std::string(argv[1]) == "DFS") {DFS dfs(maze); dfs.run(); path = dfs.get_path();}
     else if (std::string(argv[1]) == "astar" || std::string(argv[1]) == "A*") {AStar AStar(maze); AStar.run(); path = AStar.get_path();}

@@ -40,6 +40,8 @@ public:
     int h = 0;
     int f = 0;
     int manhattan_distance(Cell* end);
+    bool in_open = false;
+    bool in_closed = false;
 
     //DFS
     bool in_stack = false;
