@@ -10,7 +10,6 @@
 #include "dfs.h"
 #include "astar.h"
 #include "bnb.h"
-#include "tremaux.h"
 
 
 //Arguments will be -d 
@@ -75,7 +74,6 @@ int main(int argc, char *argv[]) {
     else if (std::string(argv[1]) == "dfs" || std::string(argv[1]) == "DFS") {DFS dfs(maze); dfs.run(); path = dfs.get_path();}
     else if (std::string(argv[1]) == "astar" || std::string(argv[1]) == "A*") {AStar AStar(maze); AStar.run(); path = AStar.get_path();}
     else if (std::string(argv[1]) == "bnb" || std::string(argv[1]) == "BNB") {BNB BNB(maze); BNB.run(); path = BNB.get_path();}
-    else if (std::string(argv[1]) == "tremaux" || std::string(argv[1]) == "Tremaux") {Tremaux Tremaux(maze); Tremaux.run(); path = Tremaux.get_path();}
 
 
     //end timing

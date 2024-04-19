@@ -1,6 +1,6 @@
 # MazeAlgorithms
 
-This repository contains various maze generation and solving algorithms implemented in C++.
+This repository contains various maze solving algorithms implemented in C++.
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ Once you've built the project, you can use the executable to generate and solve 
 
 ### Example:
 
-`./MazeAlgorithms A* 20 30 12345 -d`
+`./MazeSolver A* 20 30 12345 -d`
 
 This command will generate a maze of size 20x30 using the A* algorithm with a seed of 12345 and enable the display.
 
