@@ -53,7 +53,7 @@ void BFS::run()
     }
     path.push_back(start->getID());
 
-    std::cout << "Cells visited: " << cells_visited << std::endl;
+    maze.cells_visited = cells_visited;
 }
 
 std::vector<int> BFS::get_path() 

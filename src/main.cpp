@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Not enough arguments" << std::endl;
         return 1;
     }
-
+    std::cout << "INFORMATION: " << std::endl;
     if (std::find(algorithms.begin(), algorithms.end(), argv[1]) != algorithms.end()) 
     {
         std::cout << "Algorithm: " << argv[1] << std::endl;
@@ -46,7 +46,10 @@ int main(int argc, char *argv[]) {
     {
         seed = atoi(argv[4]);
     }
-    std::cout << "Seed value:" << seed << std::endl;
+    std::cout << "Seed value: " << seed << std::endl;
+
+    int removePercentage = atoi(argv[5]);
+    std::cout << "Remove " << removePercentage << "% of the walls\n" << std::endl;
 
     bool displayGraphics = false;
     for (int i = 1; i < argc; ++i) 
@@ -59,7 +62,8 @@ int main(int argc, char *argv[]) {
     }
 
     //call the maze class with the arguments rows, cols, seed.
-    Maze maze(rows, cols, seed);
+    Maze maze(rows, cols, seed, removePercentage);
+    std::cout << "CURRENT STEP: " << std::endl;
     maze.generate();
 
     //Run the algorithm function based on the argument
@@ -79,8 +83,10 @@ int main(int argc, char *argv[]) {
     //end timing
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
+
+    std::cout << "\nSTATISTICS:" << std::endl;
+    std::cout << "Cells visited: " << maze.cells_visited << std::endl;
     std::cout << "Time taken: " << elapsed_seconds.count() << "s\n";
-    
     std::cout << "Path length: " << path.size() << std::endl;
 
 

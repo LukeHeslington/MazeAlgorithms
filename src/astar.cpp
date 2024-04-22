@@ -24,8 +24,6 @@ AStar::~AStar()
 
 void AStar::run() 
 {
-    std::cout << "AStar run" << std::endl;
-
     Cell* start = &maze.flat_maze[0];
     Cell* end = &maze.flat_maze[maze.flat_maze.size() - 1];
     std::priority_queue<Cell*, std::vector<Cell*>, CompareF> open;
@@ -46,7 +44,6 @@ void AStar::run()
         {
             if (neighbour == end) 
             {
-                std::cout << "Goal found!" << std::endl;
                 end->parent = q;
                 closed.push_back(q);
 
@@ -60,7 +57,7 @@ void AStar::run()
                 }
                 path.push_back(start->getID());
                 
-                std::cout << "Cells visited: " << cells_visited << std::endl;
+                maze.cells_visited = cells_visited;
                 return;
             }
 
@@ -91,7 +88,6 @@ void AStar::run()
         closed.push_back(q);
         q->in_closed = true;
     }
-
 }
 
 std::vector<int> AStar::get_path() 

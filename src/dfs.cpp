@@ -65,7 +65,7 @@ void DFS::run() {
             current->neighbours_added_to_stack.clear();    
         }
     }
-    std::cout << "Cells visited: " << cells_visited << std::endl;
+    maze.cells_visited = cells_visited;
 }
 
 std::vector<int> DFS::get_path() {

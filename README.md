@@ -43,13 +43,14 @@ Once you've built the project, you can use the executable to generate and solve 
 - **row**: Number of rows in the maze.
 - **col**: Number of columns in the maze.
 - **seed**: Seed for random number generation.
+- **removal**: Percentage of walls to remove after geneation to increase difficulty.
 - **-d**: Enable display mode.
 
 ### Example:
 
-`./MazeSolver A* 20 30 12345 -d`
+`./MazeSolver A* 20 30 12345 50 -d`
 
-This command will generate a maze of size 20x30 using the A* algorithm with a seed of 12345 and enable the display.
+This command will generate a maze of size 20x30 using the A* algorithm with a seed of 12345. It will also remove 50% of the walls and enable the display.
 
 ### Available Algorithms and how to input them:
 
