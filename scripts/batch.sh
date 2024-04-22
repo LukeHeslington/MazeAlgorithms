@@ -1,7 +1,7 @@
 #!/bin/bash
 
-dimensions=(10 25 50 100 250 500 750 1000)
-seed=10
+dimensions=(10 25 50 100 250 500 750 1000 2500 5000)
+seed=1
 algorithms=("dfs" "bfs" "bnb" "A*")
 remove=0
 
