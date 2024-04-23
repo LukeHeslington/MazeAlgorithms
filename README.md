@@ -59,7 +59,7 @@ This command will generate a maze of size 20x30 using the A* algorithm with a se
 - Depth First Search (DFS or dfs)
 - Branch and Bound (BNB or BnB)
 
-###Scripts
+### Scripts
 
 A script is also proveded to run different size mazes with each of the different algorithms. This can be found in the scripts directory and can be run using:
 
