@@ -24,27 +24,32 @@ Maze::Maze(int rows, int cols, unsigned int seed, unsigned int removePercentage)
 Maze::~Maze() {
 }
 
-void Maze::generate() {
+void Maze::generate() 
+{
     std::cout << "Calculating Neighbours" << std::endl;
     calculate_neighbours();
     std::cout << "Creating Maze" << std::endl;
     turn_map_into_maze();
 }
 
-bool Maze::isValid(int row, int col) const {
+bool Maze::isValid(int row, int col) const 
+{
     return (row >= 0 && col >= 0 && row < numRows && col < numCols);
 }
 
-void Maze::calculate_neighbours(){
+void Maze::calculate_neighbours()
+{
     int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // Up, Down, Left, Right
 
-    for (int i = 0; i < numRows; ++i) {
-        for (int j = 0; j < numCols; ++j) {
-            for (int k = 0; k < 4; ++k) {
+    for (int i = 0; i < numRows; ++i) 
+    {
+        for (int j = 0; j < numCols; ++j) 
+        {
+            for (int k = 0; k < 4; ++k) 
+            {
                 int newRow = i + directions[k][0];
                 int newCol = j + directions[k][1];
                 if (isValid(newRow, newCol)) {
-                    // Add pointer to neighboring cell
                     flat_maze[i * numCols + j].getNeighbours().push_back(&flat_maze[newRow * numCols + newCol]);
                 }
             }
@@ -52,9 +57,9 @@ void Maze::calculate_neighbours(){
     }
 }
 
-void Maze::turn_map_into_maze(){
+void Maze::turn_map_into_maze()
+{
     srand(seed); //Use with rand() % 4 to get a value between 0 and 3
-    //srand(time(nullptr));
 
     //Use recursive backtracking to generate the maze
     std::vector<Cell*> stack;
@@ -62,57 +67,64 @@ void Maze::turn_map_into_maze(){
     flat_maze[0].visit_during_creation();
     
     //Create the maze.
-    while (!stack.empty()) {
+    while (!stack.empty()) 
+    {
         Cell* current = stack.back();
         std::vector<Cell*> neighbours = current->getNeighbours();
         std::vector<Cell*> unvisitedNeighbours;
-        for (int i = 0; i < neighbours.size(); ++i) {
-            if (!neighbours[i]->been_visited_during_creation()) {
+        for (int i = 0; i < neighbours.size(); ++i) 
+        {
+            if (!neighbours[i]->been_visited_during_creation()) 
+            {
                 unvisitedNeighbours.push_back(neighbours[i]);
             }
         }
-        if (!unvisitedNeighbours.empty()) {
+        if (!unvisitedNeighbours.empty()) 
+        {
             Cell* next = unvisitedNeighbours[rand() % unvisitedNeighbours.size()];
             current->getAccessNeighbours().push_back(next);
             next->getAccessNeighbours().push_back(current);
             stack.push_back(next);
             next->visit_during_creation();
-        } else {
+        } 
+        else 
+        {
             stack.pop_back();
         }
     }    
+
     std::cout << "Removing walls" << std::endl;
-    if (removePercentage > 0){
+    if (removePercentage > 0)
+    {
         remove_random_walls_version_2();
     }
-    //std::cout << "Removed " << total_walls - removed_walls << " walls out of " << total_walls << std::endl;
 }
 
-int Maze::squared(int num){
+int Maze::squared(int num)
+{
     return num * num;
 }
 
-void Maze::remove_random_walls_version_2(){
+void Maze::remove_random_walls_version_2()
+{
     int maximum = std::max(numRows, numCols);
     int minimum = std::min(numRows, numCols);
     int totalWalls = squared(maximum - 1) - ((maximum - 1) * (maximum - minimum));
     int wallsToRemove = totalWalls * removePercentage / 100;
-    // std::cout << "This is how many walls we should be removing: " << totalWalls * removePercentage / 100 << std::endl;
-
-    // std::cout << "This is the threshold: " << threshold << std::endl;
-    // std::cout << "This is the total walls left after algorithm: " << totalWalls << std::endl;
-    // std::cout << "This is the total walls that would be in the maze: " << total_walls << std::endl;
 
     int count = 0;
-    while (count < wallsToRemove){
+    while (count < wallsToRemove)
+    {
         int randomRow = (rand() % numRows);
         int randomCol = (rand() % numCols);
         int randomNeighbour = rand() % 4;
 
         std::vector<Cell*> neighbours = flat_maze[randomRow * numCols + randomCol].getNeighbours();
-        if (neighbours.size() < randomNeighbour + 1){
+        if (neighbours.size() < randomNeighbour + 1)
+        {
             continue;
         }   
+
         if (std::find(flat_maze[randomRow * numCols + randomCol].getAccessNeighbours().begin(), flat_maze[randomRow * numCols + randomCol].getAccessNeighbours().end(), neighbours[randomNeighbour]) == flat_maze[randomRow * numCols +randomCol].getAccessNeighbours().end()) {
         
             flat_maze[randomRow * numCols + randomCol].getAccessNeighbours().push_back(neighbours[randomNeighbour]);
@@ -123,61 +135,17 @@ void Maze::remove_random_walls_version_2(){
     }
 }
 
-// void Maze::remove_random_walls(){
-//     int maximum = std::max(numRows, numCols);
-//     int minimum = std::min(numRows, numCols);
-//     int totalWalls = squared(maximum - 1) - ((maximum - 1) * (maximum - minimum));
-//     //std::cout << "This is the total walls: " << totalWalls << std::endl;
-//     std::cout << "This is how many walls we should be removing: " << totalWalls * removePercentage / 100 << std::endl;
-
-//     int threshold = totalWalls * (removePercentage / 100);
-//     threshold = 80;
-
-//     std::cout << "This is the threshold: " << threshold << std::endl;
-//     std::cout << "This is the total walls left after algorithm: " << totalWalls << std::endl;
-//     std::cout << "This is the total walls that would be in the maze: " << total_walls << std::endl;
-//     //calcaulte totalWalls as a percentage of totalWalls.
-
-//     int counter = 0;
-//     int internal_counter1 = 0;
-//     int internal_counter2 = 0;
-    
-//     for (int i = 0; i < numRows; ++i) {
-//         for (int j = 0; j < numCols; ++j) {
-//             std::vector<Cell*> neighbours = flat_maze[i * numCols + j].getNeighbours();
-//             for (int k = 0; k < neighbours.size(); ++k) {
-//                 if (std::find(flat_maze[i * numCols + j].getAccessNeighbours().begin(), flat_maze[i * numCols + j].getAccessNeighbours().end(), neighbours[k]) == flat_maze[i * numCols + j].getAccessNeighbours().end()) {
-//                     counter++;
-//                     int random = rand() % totalWalls;
-//                     if (random < totalWalls * removePercentage / 100) {
-//                         flat_maze[i * numCols + j].getAccessNeighbours().push_back(neighbours[k]);
-//                         neighbours[k]->getAccessNeighbours().push_back(&flat_maze[i * numCols + j]);
-//                         internal_counter1++;
-                    
-//                         // if (std::find(neighbours[k]->getAccessNeighbours().begin(), neighbours[k]->getAccessNeighbours().end(), &flat_maze[i * numCols + j]) == neighbours[k]->getAccessNeighbours().end()) {
-//                         //     neighbours[k]->getAccessNeighbours().push_back(&flat_maze[i * numCols + j]);
-//                         //     internal_counter2++;
-//                         // }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     std::cout << "Counter: " << counter << std::endl;
-//     std::cout << "Internal Counter 1: " << internal_counter1 << std::endl;
-//     std::cout << "Internal Counter 2: " << internal_counter2 << std::endl;
-//     std::cout << "Removed " << removed_walls << " walls" << std::endl;
-// }
-
-
-
-void Maze::display(std::vector<int> path) {
+void Maze::display(std::vector<int> path)
+{
     
     sf::RenderWindow window(sf::VideoMode(800, 600), "Maze");
-    while (window.isOpen()) {
+    while (window.isOpen()) 
+    {
         sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+        while (window.pollEvent(event)) 
+        {
+            if (event.type == sf::Event::Closed) 
+            {
                 window.close();
             }
         }
@@ -189,8 +157,10 @@ void Maze::display(std::vector<int> path) {
         int cell_height = (height - 10) / numRows;
         int cell_size = std::min(cell_width, cell_height);
 
-        for(int i = 0; i < numRows; ++i){
-            for(int j = 0; j < numCols; ++j){
+        for(int i = 0; i < numRows; ++i)
+        {
+            for(int j = 0; j < numCols; ++j)
+            {
                 sf::RectangleShape cell(sf::Vector2f(cell_size, cell_size));
                 cell.setOutlineThickness(0.5);
                 //cell.setOutlineColor(sf::Color::Black);
@@ -199,7 +169,8 @@ void Maze::display(std::vector<int> path) {
                 float cellPosY = (height / 2) - (numRows * cell_size / 2) + (i * cell_size);
                 cell.setPosition(cellPosX, cellPosY);
     
-                if (std::find(path.begin(), path.end(), i * numCols + j) != path.end()) {
+                if (std::find(path.begin(), path.end(), i * numCols + j) != path.end()) 
+                {
                     //cell.setFillColor(sf::Color::Blue);
                     //Draw another red squre on top of the blue square but slightly smaller
                     sf::RectangleShape pathCell(sf::Vector2f(cell_size - (cell_size/2), cell_size - (cell_size/2)));
@@ -211,11 +182,11 @@ void Maze::display(std::vector<int> path) {
                     
 
                 }
-                else{
-                window.draw(cell);
+                else
+                {
+                    window.draw(cell);
                 }
 
-                //Get the neighbours of the current cell
 
 
                 std::vector<Cell*> neighbours = flat_maze[i * numCols + j].getAccessNeighbours();
@@ -244,7 +215,8 @@ void Maze::display(std::vector<int> path) {
                 }
 
                 // Set color for all lines
-                for (int k = 0; k < 8; k += 2) {
+                for (int k = 0; k < 8; k += 2) 
+                {
                     borderLines[k].color = sf::Color::Red;
                     borderLines[k + 1].color = sf::Color::Red;
                 }

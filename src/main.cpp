@@ -13,7 +13,8 @@
 
 
 //Arguments will be -d 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
 
     std::vector<std::string> algorithms = {"bfs", "BFS", "dfs", "DFS", "dijkstra", "Dijkstra", "a*", "A*", "BNB", "bnb","Tremaux","tremaux"};
 
