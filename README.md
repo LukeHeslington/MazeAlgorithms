@@ -17,7 +17,7 @@ To build and run the MazeAlgorithms, follow these steps:
 1. Clone this repository to your local machine:
 
 ```
-git clone https://github.com/yourusername/MazeAlgorithms.git
+git clone git@github.com:LukeHeslington/MazeAlgorithms.git
 cd MazeAlgorithms
 ```
 
